@@ -1,0 +1,6 @@
+{
+  "name": "WinzoPay",
+  "description": "Secure RP recharge, deposit, withdrawal and bank card management portal with quick transactions and dedicated admin interface.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

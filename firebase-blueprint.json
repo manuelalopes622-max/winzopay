@@ -1,0 +1,122 @@
+{
+  "entities": {
+    "Deposit": {
+      "title": "Deposit",
+      "description": "User deposit requests submitted via UPI QR or payment gateways requiring admin approval",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "userName": { "type": "string" },
+        "amount": { "type": "number" },
+        "rpAmount": { "type": "number" },
+        "utr": { "type": "string" },
+        "method": { "type": "string" },
+        "status": { "type": "string", "enum": ["PENDING", "SUCCESS", "REJECTED"] },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" },
+        "rejectedReason": { "type": "string" }
+      },
+      "required": ["id", "userId", "amount", "status", "createdAt"]
+    },
+    "Withdrawal": {
+      "title": "Withdrawal",
+      "description": "User withdrawal payout requests to bank cards requiring admin approval",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "userName": { "type": "string" },
+        "amount": { "type": "number" },
+        "bankAccount": { "type": "object" },
+        "status": { "type": "string", "enum": ["PENDING", "PROCESSING", "SUCCESS", "REJECTED"] },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" },
+        "rejectedReason": { "type": "string" }
+      },
+      "required": ["id", "userId", "amount", "status", "createdAt"]
+    },
+    "Transaction": {
+      "title": "Transaction",
+      "description": "Historical financial transaction logs",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "type": { "type": "string" },
+        "title": { "type": "string" },
+        "subtitle": { "type": "string" },
+        "amount": { "type": "number" },
+        "status": { "type": "string" },
+        "utr": { "type": "string" },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["id", "userId", "type", "amount", "status", "timestamp"]
+    },
+    "User": {
+      "title": "User",
+      "description": "User profile with balance, linked bank accounts, and referral network tracking",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "userName": { "type": "string" },
+        "userPhone": { "type": "string" },
+        "availableBalance": { "type": "number" },
+        "topUpBalance": { "type": "number" },
+        "withdrawableBalance": { "type": "number" },
+        "todayCommission": { "type": "number" },
+        "bankAccounts": { "type": "array" },
+        "referralCode": { "type": "string" },
+        "referredBy": { "type": "string" },
+        "referrerName": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["userId"]
+    },
+    "UserRPPlan": {
+      "title": "UserRPPlan",
+      "description": "RP Mining and trading plan purchases and mining progress",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "userPhone": { "type": "string" },
+        "userName": { "type": "string" },
+        "planId": { "type": "string" },
+        "planName": { "type": "string" },
+        "investedAmount": { "type": "number" },
+        "profitRate": { "type": "number" },
+        "profitAmount": { "type": "number" },
+        "totalReturn": { "type": "number" },
+        "status": { "type": "string", "enum": ["MINING", "COMPLETED", "SOLD"] },
+        "startTimestamp": { "type": "number" },
+        "completionTimestamp": { "type": "number" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "planId", "investedAmount", "status"]
+    },
+    "Config": {
+      "title": "Config",
+      "description": "Platform gateway and market settings",
+      "type": "object",
+      "properties": {
+        "upiId": { "type": "string" },
+        "upiName": { "type": "string" },
+        "minDeposit": { "type": "number" },
+        "maxDeposit": { "type": "number" },
+        "minWithdraw": { "type": "number" },
+        "maxWithdraw": { "type": "number" },
+        "sellRpStartTime": { "type": "string" },
+        "sellRpEndTime": { "type": "string" }
+      }
+    }
+  },
+  "firestore": {
+    "deposits": { "entity": "Deposit", "description": "Collection of all customer deposit requests" },
+    "withdrawals": { "entity": "Withdrawal", "description": "Collection of all customer withdrawal requests" },
+    "transactions": { "entity": "Transaction", "description": "Historical transactions ledger" },
+    "user_plans": { "entity": "UserRPPlan", "description": "Active and completed mining plans" },
+    "users": { "entity": "User", "description": "User accounts and balances" },
+    "config": { "entity": "Config", "description": "Global gateway configurations" }
+  }
+}
